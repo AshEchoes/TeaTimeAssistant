@@ -1,0 +1,3 @@
+[submodule "GameData"]
+	path = GameData
+	url = git@github.com:AshEchoes/GameData.git
