@@ -76,7 +76,7 @@ function GetHighestFavorRecipeByDrink(card_tid, drink_id)
     local recipes = GetAllRecipeByDrink(card_tid, drink_id)
 
     table.sort(recipes, function(a, b)
-        return a.base_favor < b.base_favor
+        return a.base_favor > b.base_favor
     end)
 
     -- FIX: 特殊饮品返回所有配方
@@ -123,7 +123,7 @@ table.sort(t, function(a, b)
         return a.card_tid < b.card_tid
     else
         if a.favor ~= b.favor then
-            return a.favor < b.favor
+            return a.favor > b.favor
         else
             return a.id < b.id
         end
