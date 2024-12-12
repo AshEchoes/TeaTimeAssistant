@@ -1,10 +1,10 @@
 local util = require("util")
 
-local tea_drink_cfg = util.LoadDataTable("tea_drink.dat")
-local tea_condiment_cfg = util.LoadDataTable("tea_condiment.dat")
-local tea_drink_relation = util.LoadDataTable("tea_drink_relation.dat")
-local tea_favor_cfg = util.LoadDataTable("tea_favor.dat")
-local tea_favor_ratio = util.LoadDataTable("tea_favor_ratio.dat")
+local tea_drink_cfg = util.LoadDataTable("tea_drink")
+local tea_condiment_cfg = util.LoadDataTable("tea_condiment")
+local tea_drink_relation = util.LoadDataTable("tea_drink_relation")
+local tea_favor_cfg = util.LoadDataTable("tea_favor")
+local tea_favor_ratio = util.LoadDataTable("tea_favor_ratio")
 
 local _M = {}
 

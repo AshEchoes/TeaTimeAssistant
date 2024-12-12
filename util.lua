@@ -1,6 +1,7 @@
 local _M = {}
 
-local GAME_DATA_DIR = 'GameData/data/'
+local GAME_DATA_DIR = "GameData/data/"
+local DATA_FILE_EXT = ".dat"
 
 local function read_file(name)
     local f = assert(io.open(name, "r"))
@@ -30,7 +31,7 @@ local function load_data_table(name)
 end
 
 function _M.LoadDataTable(name)
-    return load_data_table(GAME_DATA_DIR .. name)
+    return load_data_table(GAME_DATA_DIR .. name .. DATA_FILE_EXT)
 end
 
 return _M

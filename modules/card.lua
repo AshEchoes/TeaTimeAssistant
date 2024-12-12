@@ -1,6 +1,6 @@
 local util = require("util")
 
-local card_cfg = util.LoadDataTable("card.dat")
+local card_cfg = util.LoadDataTable("card")
 
 local _M = {}
 
