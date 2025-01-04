@@ -94,7 +94,7 @@ local t = {}
 local card_list = CARD.AvailableCardList
 for card_tid, is_available in pairs(card_list) do
     if is_available then
-        local drinks = TEA.GetDrinkList(card_tid)
+        local drinks = TEA.GetDrinkList(card_tid) or {}
         for _, drink_id in ipairs(drinks) do
             local recipes = GetHighestFavorRecipeByDrink(card_tid, drink_id)
             for _, recipe in ipairs(recipes) do

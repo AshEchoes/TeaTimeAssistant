@@ -4,6 +4,7 @@ local card_cfg = util.LoadDataTable("card")
 
 local _M = {}
 
+---@type table<integer, boolean>
 _M.AvailableCardList = {
     [101] = true, -- 老板
     [102] = true, -- Sweeper-EX
