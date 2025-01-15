@@ -8,7 +8,8 @@ local tea_favor_ratio = util.LoadDataTable("tea_favor_ratio")
 
 local _M = {}
 
-local TEA_BASE_FAVOR_VALUE = 300
+--- 基础默契值
+_M.TEA_BASE_FAVOR_VALUE = 300
 
 local function GetDrinkTempl(drink_id)
     return tea_drink_cfg[drink_id]
@@ -102,10 +103,10 @@ function _M.GetCondimentList(drink_id, condiment_type)
     return t
 end
 
---- 获取角色对饮品的好感加成系数
+--- 获取饮品好感加成系数
 ---@param card_tid integer @角色TID
 ---@param drink_id integer @饮品ID
----@return number @好感加成系数
+---@return number @饮品好感加成系数
 function _M.GetDrinkFavorRatio(card_tid, drink_id)
     if not drink_id then
         return
@@ -121,10 +122,10 @@ function _M.GetDrinkFavorRatio(card_tid, drink_id)
     return tea_favor_ratio[favor_lv].drink_ratio
 end
 
---- 获取角色对小料的好感加成系数
+--- 获取小料好感加成系数
 ---@param card_tid integer @角色TID
 ---@param condiment_id integer @小料ID
----@return number @好感加成系数
+---@return number @小料好感加成系数
 function _M.GetCondimentFavorRatio(card_tid, condiment_id)
     if not condiment_id then
         return
@@ -196,12 +197,12 @@ function _M.GetCondimentName(condiment_id)
     return templ.name
 end
 
---- 计算基础默契值
+--- 计算好感加成系数
 ---@param drink_ratio integer @饮品好感
 ---@param condiment_ratios integer[] @所有小料的好感加成系数
 ---@param relation_ratios integer[] @所有饮品小料适配度加成系数
----@return number @基础默契值
-function _M.CalcBaseFavorValue(drink_ratio, condiment_ratios, relation_ratios)
+---@return number @好感加成系数
+function _M.CalcFavorRatio(drink_ratio, condiment_ratios, relation_ratios)
     local function mean(x)
         local s = 0
         for _, v in ipairs(x) do
@@ -210,7 +211,7 @@ function _M.CalcBaseFavorValue(drink_ratio, condiment_ratios, relation_ratios)
         return (s / #x)
     end
 
-    return drink_ratio * mean(condiment_ratios) * mean(relation_ratios) * TEA_BASE_FAVOR_VALUE
+    return drink_ratio * mean(condiment_ratios) * mean(relation_ratios)
 end
 
 return _M

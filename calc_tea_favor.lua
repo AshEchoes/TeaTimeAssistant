@@ -26,7 +26,7 @@ end
 ---@class Recipe @饮品配方
 ---@field drink integer @饮品ID
 ---@field condiment integer[] @小料ID
----@field base_favor number @基础默契值
+---@field favor_ratio number @好感加成系数
 
 --- 获取角色在饮品下的所有配方
 ---@param card_tid integer @角色TID
@@ -55,12 +55,12 @@ function GetAllRecipeByDrink(card_tid, drink_id)
             table.insert(rel_ratios, rel_ratio)
         end
 
-        local base_favor = TEA.CalcBaseFavorValue(drink_fav_ratio, fav_ratios, rel_ratios)
+        local favor_ratio = TEA.CalcFavorRatio(drink_fav_ratio, fav_ratios, rel_ratios)
 
         local info = {
             ["drink"] = drink_id,
             ["condiment"] = recipe,
-            ["base_favor"] = base_favor
+            ["favor_ratio"] = favor_ratio
         }
         table.insert(t, info)
     end
@@ -76,7 +76,7 @@ function GetHighestFavorRecipeByDrink(card_tid, drink_id)
     local recipes = GetAllRecipeByDrink(card_tid, drink_id)
 
     table.sort(recipes, function(a, b)
-        return a.base_favor > b.base_favor
+        return a.favor_ratio > b.favor_ratio
     end)
 
     -- FIX: 特殊饮品返回所有配方
@@ -104,13 +104,12 @@ for card_tid, is_available in pairs(card_list) do
                     table.insert(condiment_names, TEA.GetCondimentName(condiment_id))
                 end
                 local condiment_name = table.concat(condiment_names, ", ")
-                local favor = math.floor(recipe.base_favor)
                 local info = {
                     ["id"] = card_tid * 100 + (recipe.drink > 9999 and recipe.condiment[1] or recipe.drink),
                     ["card_tid"] = card_tid,
                     ["drink"] = drink_name,
                     ["condiment"] = condiment_name,
-                    ["favor"] = math.floor(recipe.base_favor * 1.12 * 1.09)
+                    ["favor"] = math.floor(TEA.TEA_BASE_FAVOR_VALUE * recipe.favor_ratio * 1.12 * 1.09)
                 }
                 table.insert(t, info)
             end
