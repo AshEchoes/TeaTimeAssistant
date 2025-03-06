@@ -71,6 +71,13 @@ _M.AvailableCardList = {
     [643] = true, -- 十手卫
     [645] = true, -- 玄戈
     [646] = true, -- 余音
+    [647] = true, -- 龙和
+    [648] = true, -- 温留
+    [649] = true, -- 拉波
+    [650] = true, -- 茜茜
+    [651] = true, -- 司旸
+    [652] = true, -- 谛卡
+    [653] = true, -- 红珠小姐
 }
 
 local function GetCardTempl(card_tid)
