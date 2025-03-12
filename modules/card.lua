@@ -97,7 +97,7 @@ function _M.GetCardName(card_tid)
         return
     end
 
-    return card_templ.name
+    return _L(card_templ.name)
 end
 
 return _M

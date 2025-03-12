@@ -178,7 +178,7 @@ function _M.GetDrinkName(drink_id)
         return
     end
 
-    return templ.name
+    return _L(templ.name)
 end
 
 --- 获取小料名称
@@ -194,7 +194,7 @@ function _M.GetCondimentName(condiment_id)
         return
     end
 
-    return templ.name
+    return _L(templ.name)
 end
 
 --- 计算好感加成系数

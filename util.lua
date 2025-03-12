@@ -1,6 +1,7 @@
 local _M = {}
 
 local GAME_DATA_DIR = "GameData/data/"
+local GAME_LOCALE_DIR = "GameData/locale/"
 local DATA_FILE_EXT = ".dat"
 
 local function read_file(name)
@@ -32,6 +33,10 @@ end
 
 function _M.LoadDataTable(name)
     return load_data_table(GAME_DATA_DIR .. name .. DATA_FILE_EXT)
+end
+
+function _M.LoadLocaleTable(language)
+    return load_data_table(GAME_LOCALE_DIR .. language .. DATA_FILE_EXT)
 end
 
 return _M

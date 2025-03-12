@@ -1,3 +1,4 @@
+LOCALE = require("modules/locale")
 CARD = require("modules/card")
 TEA = require("modules/tea")
 
@@ -89,6 +90,10 @@ end
 
 --- START HERE ---
 
+if #arg > 0 then
+    LOCALE.LoadLanguageTab(arg[1])
+end
+
 local t = {}
 
 local card_list = CARD.AvailableCardList
@@ -131,5 +136,5 @@ end)
 
 print(string.format("%s,%s,%s,%s,%s", "ID", "同调者", "饮品", "小料", "默契值"))
 for _, v in ipairs(t) do
-    print(string.format("%d,%s,%s,%q,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, v.condiment, v.favor))
+    print(string.format("%d,%q,%q,%s,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, LOCALE.QuoteStr(v.condiment), v.favor))
 end
