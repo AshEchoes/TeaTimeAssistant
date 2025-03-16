@@ -1,15 +1,30 @@
 local util = require("util")
 
+local tea_cup_cfg = util.LoadDataTable("tea_cup")
 local tea_drink_cfg = util.LoadDataTable("tea_drink")
 local tea_condiment_cfg = util.LoadDataTable("tea_condiment")
 local tea_drink_relation = util.LoadDataTable("tea_drink_relation")
 local tea_favor_cfg = util.LoadDataTable("tea_favor")
 local tea_favor_ratio = util.LoadDataTable("tea_favor_ratio")
+local tea_achievement = util.LoadDataTable("tea_achievement")
+local tea_favor_unlock = util.LoadDataTable("tea_favor_unlock")
+local tea_dialog_cfg = util.LoadDataTable("tea_dialog_cfg")
 
 local _M = {}
 
 --- 基础默契值
 _M.TEA_BASE_FAVOR_VALUE = 300
+--- TeaCategory 枚举
+_M.TEA_CATEGORY = {
+    CUP = 1,
+    DRINK = 2,
+    CONDIMENT = 3,
+    DECORATION = 4
+}
+
+local function GetCupTempl(cup_id)
+    return tea_cup_cfg[cup_id]
+end
 
 local function GetDrinkTempl(drink_id)
     return tea_drink_cfg[drink_id]
@@ -25,6 +40,22 @@ end
 
 local function GetFavorTempl(card_tid)
     return tea_favor_cfg[card_tid]
+end
+
+local function GetAchievementTempls(card_tid)
+    return tea_achievement[card_tid]
+end
+
+local function GetFavorUnlockTempl(card_tid)
+    return tea_favor_unlock[card_tid]
+end
+
+local function GetDialogTempl(card_tid, dialog_id)
+    if not tea_dialog_cfg[card_tid] then
+        return
+    end
+
+    return tea_dialog_cfg[card_tid][dialog_id]
 end
 
 --- 获取角色的饮品菜单
@@ -165,6 +196,77 @@ function _M.GetCondimentRelationRatio(drink_id, condiment_id)
     return tea_favor_ratio[relation_lv].relation_ratio
 end
 
+---@class Achievement @茶憩成就
+---@field card_id integer @角色TID
+---@field index integer @成就索引
+---@field name string @成就名称
+---@field desc string @成就描述
+---@field type integer @成就类型
+---@field cup_res integer @杯子ID
+---@field drink_res integer @饮品ID
+---@field condiment_res integer[] @小料ID
+---@field decoration_res integer @装饰ID
+---@field dialog_collect_res integer[] @对话收集ID
+---@field drink_collect_res integer[] @饮品收集ID
+
+--- 获取角色的茶憩成就列表
+---@param card_tid integer @角色TID
+---@return Achievement[] @成就列表
+function _M.GetAchievementList(card_tid)
+    if not card_tid then
+        return
+    end
+
+    local achievement_templs = GetAchievementTempls(card_tid)
+    if not achievement_templs then
+        return
+    end
+
+    return achievement_templs
+end
+
+--- 获取解锁项的解锁信息
+---@param card_tid integer @角色TID
+---@param category integer @解锁类型
+---@param unlock_id integer @解锁项ID
+---@return boolean @是否解锁
+---@return integer @解锁等级
+function _M.GetUnlockInfo(card_tid, category, unlock_id)
+    if not unlock_id then
+        return false, 0
+    end
+
+    local unlock_info = GetFavorUnlockTempl(card_tid)
+    if not unlock_info then
+        return false, 0
+    end
+
+    local cat_info = unlock_info[category]
+    if not cat_info then
+        return true, 0
+    end
+
+    local unlock_lv = cat_info[unlock_id] or 0
+
+    return unlock_lv > 0, unlock_lv
+end
+
+--- 获取茶杯名称
+---@param drink_id integer @茶杯ID
+---@return string @茶杯名称
+function _M.GetCupName(cup_id)
+    if not cup_id then
+        return
+    end
+
+    local templ = GetCupTempl(cup_id)
+    if not templ then
+        return
+    end
+
+    return _L(templ.name)
+end
+
 --- 获取饮品名称
 ---@param drink_id integer @饮品ID
 ---@return string @饮品名称
@@ -195,6 +297,23 @@ function _M.GetCondimentName(condiment_id)
     end
 
     return _L(templ.name)
+end
+
+--- 获取对话名称
+---@param card_tid integer @角色TID
+---@param dialog_id integer @对话ID
+---@return string @对话名称
+function _M.GetDialogTitle(card_tid, dialog_id)
+    if not dialog_id then
+        return
+    end
+
+    local templ = GetDialogTempl(card_tid, dialog_id)
+    if not templ then
+        return
+    end
+
+    return _L(templ.title)
 end
 
 --- 计算好感加成系数

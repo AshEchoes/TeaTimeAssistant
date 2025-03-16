@@ -134,7 +134,7 @@ table.sort(t, function(a, b)
     end
 end)
 
-print(string.format("%s,%s,%s,%s,%s", "ID", "同调者", "饮品", "小料", "默契值"))
+print(string.format("%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("饮品"), _L("小料"), _L("默契值")))
 for _, v in ipairs(t) do
-    print(string.format("%d,%q,%q,%s,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, LOCALE.QuoteStr(v.condiment), v.favor))
+    print(string.format("%d,%q,%q,%q,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, LOCALE.TrimNewLine(v.condiment), v.favor))
 end
