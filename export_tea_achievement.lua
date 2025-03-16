@@ -100,5 +100,5 @@ end)
 
 print(string.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("名称"), _L("类型"), _L("茶杯"), _L("饮品"), _L("小料"), _L("配饰"), _L("备注")))
 for _, v in ipairs(t) do
-    print(string.format("%d,%q,%q,%q,%q,%q,%q,%q,%s", v.id, CARD.GetCardName(v.card_tid), v.name, v.type, v.cup, v.drink, v.condiment, v.decoration, LOCALE.QuoteStr(v.comment)))
+    print(string.format("%d,%q,%s,%q,%q,%q,%q,%q,%s", v.id, CARD.GetCardName(v.card_tid), LOCALE.QuoteStr(v.name), v.type, v.cup, v.drink, v.condiment, v.decoration, LOCALE.QuoteStr(v.comment)))
 end
