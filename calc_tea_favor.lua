@@ -90,8 +90,13 @@ end
 
 --- START HERE ---
 
-if #arg > 0 then
-    LOCALE.LoadLanguageTab(arg[1])
+local args = {}
+for i = 1, select("#", ...) do
+    args[i] = select(i, ...)
+end
+
+if #args > 0 then
+    LOCALE.LoadLanguageTab(args[1])
 end
 
 local t = {}
