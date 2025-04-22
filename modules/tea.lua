@@ -21,6 +21,11 @@ _M.TEA_CATEGORY = {
     CONDIMENT = 3,
     DECORATION = 4
 }
+--- 特殊饮品
+_M.TEA_SPECIAL_DRINK = {
+    [10000] = true, -- 老板特供
+    [10001] = true, -- 豹豹特供
+}
 
 local function GetCupTempl(cup_id)
     return tea_cup_cfg[cup_id]
@@ -74,7 +79,8 @@ function _M.GetDrinkList(card_tid)
     local t = {}
     for drink_id, _ in pairs(favor_templ.drink_map) do
         -- FIX: 特殊角色favor配置修正
-        if drink_id > 9999 then
+        local is_special_drink = _M.TEA_SPECIAL_DRINK[drink_id] or false
+        if is_special_drink then
             return table.pack(drink_id)
         end
         table.insert(t, drink_id)

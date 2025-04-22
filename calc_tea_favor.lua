@@ -6,12 +6,12 @@ local function combine(elements)
     local combos = {}
 
     local function dfs(idx, prev)
-        local isLast = idx == #elements
+        local is_last = idx == #elements
         local items = elements[idx]
         for _, combo in ipairs(items) do
             local head = {table.unpack(prev)}
             table.insert(head, combo)
-            if isLast then
+            if is_last then
                 table.insert(combos, head)
             else
                 dfs(idx + 1, head)
@@ -81,7 +81,8 @@ function GetHighestFavorRecipeByDrink(card_tid, drink_id)
     end)
 
     -- FIX: 特殊饮品返回所有配方
-    if drink_id > 9999 then
+    local is_special_drink = TEA.TEA_SPECIAL_DRINK[drink_id] or false
+    if is_special_drink then
         return recipes
     end
 
@@ -114,8 +115,18 @@ for card_tid, is_available in pairs(card_list) do
                     table.insert(condiment_names, TEA.GetCondimentName(condiment_id))
                 end
                 local condiment_name = table.concat(condiment_names, ", ")
+                local recipe_id = recipe.drink
+                if recipe_id > 9999 then
+                    local is_special_drink = TEA.TEA_SPECIAL_DRINK[drink_id] or false
+                    if is_special_drink then
+                        recipe_id = recipe.condiment[1]
+                    else
+                        -- FIX: 茜茜无酒精特调
+                        recipe_id = recipe_id - 9999 + 90
+                    end
+                end
                 local info = {
-                    ["id"] = card_tid * 100 + (recipe.drink > 9999 and recipe.condiment[1] or recipe.drink),
+                    ["id"] = card_tid * 100 + recipe_id,
                     ["card_tid"] = card_tid,
                     ["drink"] = drink_name,
                     ["condiment"] = condiment_name,
