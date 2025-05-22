@@ -130,7 +130,7 @@ for card_tid, is_available in pairs(card_list) do
                     ["card_tid"] = card_tid,
                     ["drink"] = drink_name,
                     ["condiment"] = condiment_name,
-                    ["favor"] = math.floor(TEA.TEA_BASE_FAVOR_VALUE * recipe.favor_ratio * 1.12 * 1.09)
+                    ["favor"] = math.floor(TEA.TEA_BASE_FAVOR_VALUE * recipe.favor_ratio * TEA.TEA_FAVOR_BONUS_COZINESS * TEA.TEA_FAVOR_BONUS_EXTRA)
                 }
                 table.insert(t, info)
             end

@@ -26,6 +26,9 @@ _M.TEA_SPECIAL_DRINK = {
     [10000] = true, -- 老板特供
     [10001] = true, -- 豹豹特供
 }
+--- 额外加成配置
+_M.TEA_FAVOR_BONUS_COZINESS = 1.12 -- 舒适度
+_M.TEA_FAVOR_BONUS_EXTRA = 1 + 0.09 + 0.1 -- 默契无间 + 真心联礼
 
 local function GetCupTempl(cup_id)
     return tea_cup_cfg[cup_id]
