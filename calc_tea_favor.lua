@@ -28,6 +28,7 @@ end
 ---@field drink integer @饮品ID
 ---@field condiment integer[] @小料ID
 ---@field favor_ratio number @好感加成系数
+---@field favor_base number @基础默契值
 
 --- 获取角色在饮品下的所有配方
 ---@param card_tid integer @角色TID
@@ -61,7 +62,8 @@ function GetAllRecipeByDrink(card_tid, drink_id)
         local info = {
             ["drink"] = drink_id,
             ["condiment"] = recipe,
-            ["favor_ratio"] = favor_ratio
+            ["favor_ratio"] = favor_ratio,
+            ["favor_base"] = TEA.TEA_BASE_FAVOR_VALUE * favor_ratio
         }
         table.insert(t, info)
     end
@@ -130,7 +132,9 @@ for card_tid, is_available in pairs(card_list) do
                     ["card_tid"] = card_tid,
                     ["drink"] = drink_name,
                     ["condiment"] = condiment_name,
-                    ["favor"] = math.floor(TEA.TEA_BASE_FAVOR_VALUE * recipe.favor_ratio * TEA.TEA_FAVOR_BONUS_COZINESS * TEA.TEA_FAVOR_BONUS_EXTRA)
+                    ["favor"] = recipe.favor_base,
+                    ["favor1"] = math.floor(recipe.favor_base * TEA.TEA_FAVOR_BONUS_COZINESS * TEA.TEA_FAVOR_BONUS_EXTRA_A),
+                    ["favor2"] = math.floor(recipe.favor_base * TEA.TEA_FAVOR_BONUS_COZINESS * TEA.TEA_FAVOR_BONUS_EXTRA_B)
                 }
                 table.insert(t, info)
             end
@@ -150,7 +154,7 @@ table.sort(t, function(a, b)
     end
 end)
 
-print(string.format("%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("饮品"), _L("小料"), _L("默契值")))
+print(string.format("%s,%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("饮品"), _L("小料"), _L("默契值") .. "A", _L("默契值") .. "B"))
 for _, v in ipairs(t) do
-    print(string.format("%d,%q,%q,%q,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, LOCALE.TrimNewLine(v.condiment), v.favor))
+    print(string.format("%d,%q,%q,%q,%d,%d", v.id, CARD.GetCardName(v.card_tid), v.drink, LOCALE.TrimNewLine(v.condiment), v.favor1, v.favor2))
 end
