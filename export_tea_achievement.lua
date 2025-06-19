@@ -29,7 +29,7 @@ for card_tid, is_available in pairs(card_list) do
         ---@type Achievement[]
         local achs = TEA.GetAchievementList(card_tid) or {}
         for _, ach in ipairs(achs) do
-            local cup_name = TEA.GetDrinkName(ach.cup_res) or ""
+            local cup_name = TEA.GetCupName(ach.cup_res) or ""
             local drink_name = TEA.GetDrinkName(ach.drink_res) or ""
             local condiment_ids = ach.condiment_res or {}
             local condiment_names = {}
@@ -37,7 +37,7 @@ for card_tid, is_available in pairs(card_list) do
                 table.insert(condiment_names, TEA.GetCondimentName(condiment_id))
             end
             local condiment_name = table.concat(condiment_names, ", ")
-            local decoration_name = TEA.GetDrinkName(ach.decoration_res) or ""
+            local decoration_name = TEA.GetDecorationName(ach.decoration_res) or ""
             local comment = ""
             if ach.type == 1 then
                 local req_fav_lv = 1
@@ -103,7 +103,9 @@ table.sort(t, function(a, b)
     return a.id < b.id
 end)
 
-print(string.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("名称"), _L("类型"), _L("茶杯"), _L("饮品"), _L("小料"), _L("配饰"), _L("备注")))
+print(string.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", "ID", _L("同调者"), _L("名称"), _L("类型"), _L("茶杯"),
+    _L("饮品"), _L("小料"), _L("配饰"), _L("备注")))
 for _, v in ipairs(t) do
-    print(string.format("%d,%q,%s,%q,%q,%q,%q,%q,%s", v.id, CARD.GetCardName(v.card_tid), LOCALE.QuoteStr(v.name), v.type, v.cup, v.drink, v.condiment, v.decoration, LOCALE.QuoteStr(v.comment)))
+    print(string.format("%d,%q,%s,%q,%q,%q,%q,%q,%s", v.id, CARD.GetCardName(v.card_tid), LOCALE.QuoteStr(v.name),
+        v.type, v.cup, v.drink, v.condiment, v.decoration, LOCALE.QuoteStr(v.comment)))
 end

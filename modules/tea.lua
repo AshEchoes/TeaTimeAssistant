@@ -3,6 +3,8 @@ local util = require("util")
 local tea_cup_cfg = util.LoadDataTable("tea_cup")
 local tea_drink_cfg = util.LoadDataTable("tea_drink")
 local tea_condiment_cfg = util.LoadDataTable("tea_condiment")
+local tea_decoration_cfg = util.LoadDataTable("tea_decoration")
+
 local tea_drink_relation = util.LoadDataTable("tea_drink_relation")
 local tea_favor_cfg = util.LoadDataTable("tea_favor")
 local tea_favor_ratio = util.LoadDataTable("tea_favor_ratio")
@@ -41,6 +43,10 @@ end
 
 local function GetCondimentTempl(condiment_id)
     return tea_condiment_cfg[condiment_id]
+end
+
+local function GetDecorationTempl(decoration_id)
+    return tea_decoration_cfg[decoration_id]
 end
 
 local function GetDrinkRelationTempl(drink_id)
@@ -262,7 +268,7 @@ function _M.GetUnlockInfo(card_tid, category, unlock_id)
 end
 
 --- 获取茶杯名称
----@param drink_id integer @茶杯ID
+---@param cup_id integer @茶杯ID
 ---@return string @茶杯名称
 function _M.GetCupName(cup_id)
     if not cup_id then
@@ -302,6 +308,22 @@ function _M.GetCondimentName(condiment_id)
     end
 
     local templ = GetCondimentTempl(condiment_id)
+    if not templ then
+        return
+    end
+
+    return _L(templ.name)
+end
+
+--- 获取装饰名称
+---@param decoration_id_id integer @小料ID
+---@return string @小料名称
+function _M.GetDecorationName(decoration_id)
+    if not decoration_id then
+        return
+    end
+
+    local templ = GetDecorationTempl(decoration_id)
     if not templ then
         return
     end
