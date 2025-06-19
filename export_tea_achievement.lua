@@ -46,7 +46,7 @@ for card_tid, is_available in pairs(card_list) do
                 local is_unlock, unlock_lv = TEA.GetUnlockInfo(card_tid, TEA.TEA_CATEGORY.CUP, ach.cup_res)
                 if is_unlock and unlock_lv > req_fav_lv then
                     req_fav_lv = unlock_lv
-                    req_fav_item = TEA.GetDrinkName(ach.cup_res)
+                    req_fav_item = TEA.GetCupName(ach.cup_res)
                 end
 
                 local is_unlock, unlock_lv = TEA.GetUnlockInfo(card_tid, TEA.TEA_CATEGORY.DRINK, ach.drink_res)
