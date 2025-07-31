@@ -46,6 +46,7 @@ _M.AvailableCardList = {
     [605] = true, -- 龙晴
     [607] = true, -- 瞳
     [608] = true, -- 昊苍
+    [609] = true, -- 织雪
     [610] = true, -- 乐无异
     [611] = true, -- 晴雪
     [612] = true, -- 米达斯
