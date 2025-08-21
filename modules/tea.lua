@@ -31,7 +31,7 @@ _M.TEA_SPECIAL_DRINK = {
 --- 额外加成配置
 _M.TEA_FAVOR_BONUS_COZINESS = 1.12 -- 舒适度
 _M.TEA_FAVOR_BONUS_EXTRA_A = 1 + 0.09 -- 默契无间
-_M.TEA_FAVOR_BONUS_EXTRA_B = 1 + 0.09 + 0.1 -- 默契无间 + 真心联礼(10%)
+_M.TEA_FAVOR_BONUS_EXTRA_B = 1 + 0.09 + 0.14 -- 默契无间 + 真心联礼(14%)
 
 local function GetCupTempl(cup_id)
     return tea_cup_cfg[cup_id]
